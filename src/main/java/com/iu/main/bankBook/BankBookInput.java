@@ -23,5 +23,22 @@ public class BankBookInput {
 		
 		return bankBookDTO;
 	}
+	
+	public BankBookDTO bankBookDelete() {
+		BankBookDTO bankBookDTO = new BankBookDTO();
+		System.out.println("삭제할 번호를 입력하세요.");
+		bankBookDTO.setBookNum(sc.nextLong());
+		
+		return bankBookDTO;
+		
+	}
+	
+	public BankBookDTO bankBookDetail() {
+		BankBookDTO bankBookDTO = new BankBookDTO();
+		System.out.println("조회할 번호를 입력하세요.");
+		bankBookDTO.setBookNum(sc.nextInt());
+		
+		return bankBookDTO;
+	}
 
 }
