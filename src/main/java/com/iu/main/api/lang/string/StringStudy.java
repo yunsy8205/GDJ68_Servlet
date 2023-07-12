@@ -64,7 +64,7 @@ public class StringStudy {
 		//그외 알수없는 파일 형식 출력
 		
 		System.out.println("파일명 입력");
-		String file = sc.next();
+		String file = sc.nextLine();
 		file = file.substring(file.lastIndexOf(".")+1);
 		
 		if(file.equals("jpg")) {
@@ -88,7 +88,7 @@ public class StringStudy {
 		System.out.println("파일명 입력");
 		String file = sc.next();
 		file = file.substring(file.lastIndexOf(".")+1);
-		
+		file = file.toLowerCase();
 		if(file.equals("jpg")||file.equals("jpeg")||file.equals("png")||file.equals("gif")) {
 			System.out.println("이미지파일");
 		}else if(file.equals("doc")||file.equals("txt")||file.equals("hwp")||file.equals("jpg")) {
@@ -98,6 +98,10 @@ public class StringStudy {
 		}else {
 			System.out.println("알수없는 파일 형식");
 		}
+		//내용 자르는 법 2가지 1)split 2)substring
+		String [] fn = file.split(".");
+		//3-2,4-3,2-1,1-0
 	}
+	
 
 }
