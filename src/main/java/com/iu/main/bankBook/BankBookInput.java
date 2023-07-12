@@ -40,5 +40,13 @@ public class BankBookInput {
 		
 		return bankBookDTO;
 	}
+	
+	public BankBookDTO bankBookSearch() {
+		BankBookDTO bankBookDTO = new BankBookDTO();
+		System.out.println("조회할 이름을 입력하세요.");
+		bankBookDTO.setBookName(sc.next());
+		
+		return bankBookDTO;
+	}
 
 }

@@ -3,10 +3,71 @@ package com.iu.main.bankBook;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.iu.main.util.DBConnector;
 
 public class BankBookDAO {
+	
+	//상품 N개 조회
+	//bankBookSearch
+	public ArrayList<BankBookDTO> bankBookSearch(BankBookDTO bankBookDTO) throws Exception{
+		ArrayList<BankBookDTO> ar = new ArrayList<BankBookDTO>();
+		//1. DB 연결
+		Connection con = DBConnector.getConnection();
+		//2. query
+		String sql = "SELECT * FROM BANKBOOK WHERE BOOKNAME LIKE ? ORDER BY BOOKNUM DESC";//내림차순
+		//3. 미리보내기
+		PreparedStatement st = con.prepareStatement(sql);
+		//4. ?값 세팅
+		st.setString(1, "%"+bankBookDTO.getBookName()+"%");
+		
+		//5. 최종 전송 및 결과 처리
+
+		ResultSet rs = st.executeQuery();
+		
+		while(rs.next()) {
+			bankBookDTO = new BankBookDTO();
+			bankBookDTO.setBookNum(rs.getLong("BOOKNUM"));
+			bankBookDTO.setBookName(rs.getNString("BOOKNAME"));
+			bankBookDTO.setBookRate(rs.getDouble("BOOKRATE"));
+			bankBookDTO.setBookSale(rs.getInt("BOOKSALE"));
+			ar.add(bankBookDTO);	
+		}
+		DBConnector.disConnect(rs, st, con);
+		
+		return ar;
+		
+	}
+	
+	//상품 N개 조회
+	public ArrayList<BankBookDTO> bankBookList() throws Exception{
+		ArrayList<BankBookDTO> ar = new ArrayList<BankBookDTO>();
+		//1. DB 연결
+		Connection con = DBConnector.getConnection();
+		//2. query
+		String sql = "SELECT * FROM BANKBOOK ORDER BY BOOKNUM DESC";//내림차순
+		//3. 미리보내기
+		PreparedStatement st = con.prepareStatement(sql);
+		//4. ?세팅
+		//5. 최종 전송 및 결과 처리
+		ResultSet rs = st.executeQuery();
+		while(rs.next()) {
+			BankBookDTO bankBookDTO = new BankBookDTO();
+			
+			bankBookDTO.setBookNum(rs.getLong("BOOKNUM"));
+			bankBookDTO.setBookName(rs.getNString("BOOKNAME"));
+			bankBookDTO.setBookRate(rs.getDouble("BOOKRATE"));
+			bankBookDTO.setBookSale(rs.getInt("BOOKSALE"));
+			ar.add(bankBookDTO);
+			
+		}
+		
+		DBConnector.disConnect(rs, st, con);
+		
+		return ar;
+		
+	}
 	//상품 1개 조회
 	public BankBookDTO bankBookDetail(BankBookDTO bankBookDTO) throws Exception{
 		//1. DB 연결
@@ -37,6 +98,7 @@ public class BankBookDAO {
 			
 		}
 		
+		DBConnector.disConnect(rs, st, con);
 		return bankBookDTO; 
 		
 	}
@@ -60,6 +122,8 @@ public class BankBookDAO {
 		
 		System.out.println("DB에 insert");
 		
+		DBConnector.disConnect(st, con);
+		
 		return result;
 		
 	}
@@ -79,6 +143,7 @@ public class BankBookDAO {
 		
 		System.out.println("DB Delete");
 		
+		DBConnector.disConnect(st, con);
 		return result;
 	}
 
